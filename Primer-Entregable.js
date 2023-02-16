@@ -35,7 +35,11 @@ class ProductManager {
       console.log("Product not found");
       return;
     }
-    return console.log(event);
+    return event;
+  };
+
+  getElements = () => {
+    return this.products;
   };
 }
 
