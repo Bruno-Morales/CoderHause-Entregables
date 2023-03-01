@@ -1,0 +1,20 @@
+{
+  "name": "primer-entregable",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Primer-Entregable.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bruno-Morales/CoderHause-Entregables.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bruno-Morales/CoderHause-Entregables/issues"
+  },
+  "homepage": "https://github.com/Bruno-Morales/CoderHause-Entregables#readme"
+}
