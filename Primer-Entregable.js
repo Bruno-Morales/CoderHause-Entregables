@@ -67,33 +67,80 @@ class ProductManager {
         console.log("Product not found");
         return;
       }
+      // console.log(result.findIndex(JSON.stringify(event)));
+
+      // result[index][campo] = newDate;
+
+      // return console.log(result);
+
       let llaveValor = Object.entries(event);
 
       let soloValores = Object.values(event);
 
       if (llaveValor[1][0] === campo) {
         event.title = newDate;
-        console.log(event);
+        return event;
       }
       if (llaveValor[2][0] === campo) {
         event.description = newDate;
-        console.log(event);
+        return event;
       }
       if (llaveValor[3][0] === campo) {
         event.price = newDate;
+        return event;
       }
       if (llaveValor[4][0] === campo) {
         event.thumbnail = newDate;
-        console.log(event);
+        return event;
       }
       if (llaveValor[5][0] === campo) {
         event.code = newDate;
-        console.log(event);
+        return event;
       }
       if (llaveValor[6][0] === campo) {
         event.stock = newDate;
-        console.log(event);
+        return event;
       }
+      const product = {
+        id: products.length + 1,
+        title,
+        description,
+        price,
+        thumbnail,
+        code,
+        stock,
+      };
+      const products = await this.getProducts();
+
+      products.push(product);
+
+      // await fs.promises.writeFile(
+      //   this.path,
+      //   JSON.stringify(products, null, "\t")
+      // );
+      // return product;
+    }
+  };
+
+  deleteProduct = async (id) => {
+    const products = await this.getProducts();
+    if (fs.existsSync(this.path)) {
+      const data = await fs.promises.readFile(this.path, "utf-8");
+      const result = JSON.parse(data);
+      const event = result.find((product) => product.id === id);
+
+      console.log(event);
+      console.log(result);
+
+      let newArray = result.filter((elemento) => !elemento.id == event.id);
+
+      products.push(newArray);
+
+      return await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(products, null, "\t")
+      );
+      //completar
     }
   };
 
@@ -108,16 +155,6 @@ class ProductManager {
   //     }
   //     let llaveValor = Object.entries(event);
   //     let soloValores = Object.values(event);
-
-  //     let productNew = {
-  //       id: event.id,
-  //       title: event.title,
-  //       description: event.description,
-  //       price: event.price,
-  //       thumbnail: event.thumbnail,
-  //       code: event.code,
-  //       stock: event.stock,
-  //     };
 
   //     for (let i = 0; i < llaveValor.length; i++) {
   //       if (llaveValor[i][0] === campo) {
@@ -140,14 +177,14 @@ const consulta = async () => {
   console.log("------------------");
   console.log(primeraConsulta + "     Esta consulta primero sale vacía.");
   console.log("------------------");
-  await productManager.addProduct(
-    "Primer Producto Manaos",
-    "Prueba con manaos 2 litros",
-    200,
-    "https://google.com",
-    22,
-    130
-  );
+  // await productManager.addProduct(
+  //   "Primer Producto Manaos",
+  //   "Prueba con manaos 2 litros",
+  //   200,
+  //   "https://google.com",
+  //   22,
+  //   130
+  // );
   console.log("------------------");
   console.log("--Consulta con producto por ID----");
   console.log("------------------");
@@ -160,7 +197,11 @@ const consulta = async () => {
 
   //para modificar poroducto, agregar primer parametro id, segundo el campo a modificar, y tercero su valor.
 
-  await productManager.updateProduct(1, "code", 160);
+  //await productManager.updateProduct(1, "price", 1600);
+
+  //await productManager.deleteProduct(2);
 };
 
-consulta();
+module.exports = ProductManager;
+
+//consulta();
