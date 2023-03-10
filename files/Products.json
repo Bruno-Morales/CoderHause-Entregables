@@ -5,7 +5,7 @@
     "description": "Prueba con manaos 2 litros",
     "price": 200,
     "thumbnail": "https://google.com",
-    "code": 22,
+    "code": 25,
     "stock": 130
   },
   {
@@ -16,5 +16,14 @@
     "thumbnail": "https://google.com",
     "code": 22,
     "stock": 130
+  },
+  {
+    "id": 3,
+    "title": "Segundo Producto Manaos",
+    "description": "Prueba con manaos 3 litros",
+    "price": 20,
+    "thumbnail": "https://google.com",
+    "code": 23,
+    "stock": 13
   }
 ]
