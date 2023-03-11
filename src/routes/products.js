@@ -1,11 +1,38 @@
-const express = require("express");
-const app = express();
+var express = require("express");
+var router = express.Router();
+const multer = require("multer");
+var path = require("path");
 
-const ProductManager = require("./Primer-Entregable");
+const ProductManager = require("../../Primer-Entregable");
 
 const productManager = new ProductManager();
 
-app.get("/products", async (req, res) => {
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/img/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(
+      null,
+      file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({ storage });
+
+//rutas para crear
+
+router.post("/create", upload.single("img"), async (req, res) => {
+  let image = "";
+  if (req.file) {
+    image = req.file.filename;
+  }
+  return res.send(image);
+});
+
+router.get("/", async (req, res) => {
   let limit = req.query.limit;
 
   let consulta = await productManager.getProducts();
@@ -28,7 +55,7 @@ app.get("/products", async (req, res) => {
   res.send(newconsult);
 });
 
-app.get("/products/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   let product = req.params.id;
 
   let segundaConsulta = await productManager.getProducts();
@@ -48,4 +75,4 @@ app.get("/products/:id", async (req, res) => {
   res.send(primeraConsulta);
 });
 
-app.listen(3000);
+module.exports = router;
