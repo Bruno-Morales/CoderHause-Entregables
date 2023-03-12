@@ -15,17 +15,35 @@ class ProductManager {
     }
   };
 
-  addProduct = async (title, description, price, thumbnail, code, stock) => {
+  addProduct = async (
+    title,
+    description,
+    price,
+    thumbnail,
+    code,
+    stock,
+    category
+  ) => {
     const products = await this.getProducts();
     const coderepit = products.find((product) => product.code === code);
     if (coderepit) {
       console.log("This Code does exist!");
       return;
     }
-    if (!title || !description || !price || !thumbnail || !code || !stock) {
+
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !thumbnail ||
+      !code ||
+      !stock ||
+      !category
+    ) {
       console.log("You must complete all fields");
       return;
     }
+
     const product = {
       id: products.length + 1,
       title,
@@ -34,6 +52,7 @@ class ProductManager {
       thumbnail,
       code,
       stock,
+      category,
     };
 
     products.push(product);
@@ -65,7 +84,11 @@ class ProductManager {
       const event = result.findIndex((product) => product.id === id);
       if (!event) {
         console.log("Product not found");
-        return;
+      }
+      if (!id || !campo || !newDate) {
+        console.log(
+          "Debe completar todos los campos: campo a editar y nuevo dato."
+        );
       }
       const index = result.findIndex((product) => product.id === id);
       result[index][campo] = newDate;

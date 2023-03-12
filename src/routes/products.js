@@ -3,7 +3,7 @@ var router = express.Router();
 const multer = require("multer");
 var path = require("path");
 
-const ProductManager = require("../../Primer-Entregable");
+const ProductManager = require("../../Product-Managger");
 
 const productManager = new ProductManager();
 
@@ -22,14 +22,34 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-//rutas para crear
+router.post("/", upload.single("thumbnail"), async (req, res) => {
+  const products = await productManager.getProducts();
 
-router.post("/create", upload.single("img"), async (req, res) => {
   let image = "";
   if (req.file) {
     image = req.file.filename;
   }
-  return res.send(image);
+  const product = {
+    title: req.body.title,
+    description: req.body.description,
+    price: req.body.price,
+    image,
+    code: req.body.code,
+    stock: req.body.stock,
+    category: req.body.category,
+  };
+
+  let consulta1 = await productManager.addProduct(
+    product.title,
+    product.description,
+    product.price,
+    product.image,
+    product.code,
+    product.stock,
+    product.category
+  );
+
+  return res.send(consulta1);
 });
 
 router.get("/", async (req, res) => {
@@ -73,6 +93,22 @@ router.get("/:id", async (req, res) => {
   }
 
   res.send(primeraConsulta);
+});
+
+router.put("/:id", async (req, res) => {
+  let product = req.params.id;
+  await productManager.updateProduct(
+    JSON.parse(product),
+    req.body.campo,
+    req.body.newDate
+  );
+  res.send("Successfull");
+});
+
+router.delete("/:id", async (req, res) => {
+  let product = req.params.id;
+  await productManager.deleteProduct(JSON.parse(product));
+  res.send("Successfull");
 });
 
 module.exports = router;

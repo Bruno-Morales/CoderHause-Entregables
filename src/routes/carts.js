@@ -1,11 +1,43 @@
 var express = require("express");
 var router = express.Router();
-const ProductManager = require("../../Primer-Entregable");
+const CartManager = require("../../Cart-Managger");
 
-const productManager = new ProductManager();
+const cartManager = new CartManager();
 
-router.get("/", async (req, res) => {});
+router.post("/", async (req, res) => {
+  const cart = {
+    product: req.body.product,
+  };
 
-router.get("/:id", async (req, res) => {});
+  await cartManager.addCart(cart.product);
+  return console.log("Successfull");
+});
+
+router.get("/:id", async (req, res) => {
+  let cart = req.params.id;
+
+  let segundaConsulta = await cartManager.getCarts();
+
+  let primeraConsulta = await cartManager.getCartById(JSON.parse(cart));
+  //console.log(primeraConsulta);
+  //console.log(primeraConsulta.length);
+  if (!segundaConsulta) {
+    return res.send("No hay productos en el carrito.");
+  }
+  res.send(primeraConsulta);
+});
+
+router.post("/:id/product/:pid", async (req, res) => {
+  let cart = req.params.id;
+  let product = req.params.pid;
+  let primeraConsulta = await cartManager.addProductAtCart(
+    JSON.parse(cart),
+    JSON.parse(product)
+  );
+  //console.log(primeraConsulta);
+  //console.log(primeraConsulta.length);
+
+  res.sendStatus(202);
+});
 
 module.exports = router;
