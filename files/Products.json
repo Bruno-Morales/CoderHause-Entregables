@@ -1,14 +1,5 @@
 [
 	{
-		"id": 1,
-		"title": "Primer Producto Manaos",
-		"description": "Prueba con manaos 2 litros",
-		"price": 200,
-		"thumbnail": "https://google.com",
-		"code": 25,
-		"stock": 130
-	},
-	{
 		"id": 2,
 		"description": "Prueba con manaos 3 litros",
 		"price": 2000,
@@ -44,7 +35,7 @@
 	},
 	{
 		"id": 6,
-		"title": "Nuevo producto Por Postman",
+		"title": "Nuevo titulo editado",
 		"description": "Producto de prueba123",
 		"price": "1200",
 		"thumbnail": "thumbnail-1678646838633-3569786.jpg",

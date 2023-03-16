@@ -15,7 +15,7 @@ class CartManager {
     }
   };
 
-  addCart = async (products) => {
+  addCart = async () => {
     const carts = await this.getCarts();
 
     const cart = {
@@ -27,6 +27,12 @@ class CartManager {
         },
       ],
     };
+    // const cart = {
+    //   id: carts.length + 1,
+    //   products: products.map((product) => {
+    //     return { ...product, quantity: 1 };
+    //   }),
+    // };
 
     carts.push(cart);
 
@@ -45,8 +51,6 @@ class CartManager {
       const indexProduct = result[indexCart].products.findIndex(
         (cart) => cart.product === pid
       );
-
-      console.log(indexProduct);
 
       if (indexProduct == -1) {
         const productNew = {
@@ -86,8 +90,7 @@ class CartManager {
       const result = JSON.parse(data);
       const event = result.find((product) => product.id === id);
       if (!event) {
-        console.log("Cart not found");
-        return;
+        return undefined;
       }
       return event;
     }

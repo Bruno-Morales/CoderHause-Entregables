@@ -7,33 +7,14 @@ const ProductManager = require("../../Product-Managger");
 
 const productManager = new ProductManager();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/img/");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(
-      null,
-      file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
-    );
-  },
-});
-
-const upload = multer({ storage });
-
-router.post("/", upload.single("thumbnail"), async (req, res) => {
+router.post("/", async (req, res) => {
   const products = await productManager.getProducts();
 
-  let image = "";
-  if (req.file) {
-    image = req.file.filename;
-  }
   const product = {
     title: req.body.title,
     description: req.body.description,
     price: req.body.price,
-    image,
+    thumbnails: req.body.thumbnails,
     code: req.body.code,
     stock: req.body.stock,
     category: req.body.category,
@@ -43,7 +24,7 @@ router.post("/", upload.single("thumbnail"), async (req, res) => {
     product.title,
     product.description,
     product.price,
-    product.image,
+    product.thumbnails,
     product.code,
     product.stock,
     product.category
@@ -107,8 +88,14 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   let product = req.params.id;
-  await productManager.deleteProduct(JSON.parse(product));
-  res.send("Successfull");
+
+  let productdelete = await productManager.deleteProduct(JSON.parse(product));
+
+  if (productdelete === true) {
+    res.send("Successfull");
+  } else {
+    res.send("Product Not Found");
+  }
 });
 
 module.exports = router;

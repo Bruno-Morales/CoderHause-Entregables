@@ -19,7 +19,7 @@ class ProductManager {
     title,
     description,
     price,
-    thumbnail,
+    thumbnails,
     code,
     stock,
     category
@@ -35,7 +35,7 @@ class ProductManager {
       !title ||
       !description ||
       !price ||
-      !thumbnail ||
+      !thumbnails ||
       !code ||
       !stock ||
       !category
@@ -49,7 +49,7 @@ class ProductManager {
       title,
       description,
       price,
-      thumbnail,
+      thumbnails,
       code,
       stock,
       category,
@@ -106,21 +106,19 @@ class ProductManager {
       const result = JSON.parse(data);
       const event = result.find((product) => product.id === id);
 
+      console.log(event);
+
       if (event) {
         let newArray = result.filter((product) => product.id !== event.id);
-        return await fs.promises.writeFile(
+        await fs.promises.writeFile(
           this.path,
           JSON.stringify(newArray, null, "\t")
         );
-      } else {
-        return console.log("No existe ese elemento.");
+        return true;
       }
-
-      // return await fs.promises.writeFile(
-      //   this.path,
-      //   JSON.stringify(products, null, "\t")
-      // );
-      //completar
+      if (!event) {
+        return false;
+      }
     }
   };
 
