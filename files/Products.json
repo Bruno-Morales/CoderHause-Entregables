@@ -3,6 +3,7 @@
 		"id": 2,
 		"description": "Prueba con manaos 3 litros",
 		"price": 2000,
+		"title": "Primer Producto Manaos",
 		"thumbnail": "https://google.com",
 		"code": 22,
 		"stock": 130
@@ -41,5 +42,105 @@
 		"thumbnail": "thumbnail-1678646838633-3569786.jpg",
 		"code": "17",
 		"stock": "200"
+	},
+	{
+		"id": 6,
+		"title": "re54432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "rsd2",
+		"stock": "req4.324",
+		"category": "re5dy.2"
+	},
+	{
+		"id": 7,
+		"title": "re432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "r2",
+		"stock": "req4.324",
+		"category": "re5dy.2"
+	},
+	{
+		"id": 8,
+		"title": "re432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "r3443",
+		"stock": "req4.324",
+		"category": "re5dy.2"
+	},
+	{
+		"id": 9,
+		"title": "re432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "r3sdds3",
+		"stock": "req4.324",
+		"category": "re5dy.2"
+	},
+	{
+		"id": 10,
+		"title": "re432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "dds3",
+		"stock": "re324",
+		"category": "re5dy.2"
+	},
+	{
+		"id": 11,
+		"title": "re432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "dd333s3",
+		"stock": "re324",
+		"category": "re5dy.2"
+	},
+	{
+		"id": 12,
+		"title": "re432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "dddsdssd33s3",
+		"stock": "re544545544",
+		"category": "re5dy.2"
+	},
+	{
+		"id": 13,
+		"title": "re432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "d5445ddsdssd33s3",
+		"stock": "re455444545544",
+		"category": "re5dy.2"
+	},
+	{
+		"id": 14,
+		"title": "re432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "dsd33s3",
+		"stock": "re455444545544",
+		"category": "re5dy.2"
+	},
+	{
+		"id": 15,
+		"title": "re432",
+		"description": "ron",
+		"price": "r3ce",
+		"thumbnails": "re.323",
+		"code": "ds4343443s3",
+		"stock": "re455444545544",
+		"category": "re5dy.2"
 	}
 ]

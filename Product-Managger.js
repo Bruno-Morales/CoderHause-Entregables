@@ -1,4 +1,5 @@
 const fs = require("fs");
+const socket = require("./socket");
 
 class ProductManager {
   constructor() {
@@ -43,7 +44,6 @@ class ProductManager {
       console.log("You must complete all fields");
       return;
     }
-
     const product = {
       id: products.length + 1,
       title,
@@ -61,6 +61,9 @@ class ProductManager {
       this.path,
       JSON.stringify(products, null, "\t")
     );
+
+    socket.io.emit("product_added", product);
+
     return product;
   };
 
