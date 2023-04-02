@@ -1,14 +1,13 @@
 <h1>Hola estoy en el RealTimeProducts</h1>
 <br>
+
+<div id="productsNew">
+{{#each products}}
 <div>
-  {{#each products}}
-    <div>
-        <h2>{{this.title}}</h2>
-    </div>
-{{/each}}
+    <h2>{{this.title}}</h2>
 </div>
-<div>
-  <h2 id="productsNew"></h2>
+<br>
+{{/each}}
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

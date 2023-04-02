@@ -84,39 +84,38 @@ class ProductManager {
     if (fs.existsSync(this.path)) {
       const data = await fs.promises.readFile(this.path, "utf-8");
       const result = JSON.parse(data);
-      const event = result.findIndex((product) => product.id === id);
-      if (!event) {
-        console.log("Product not found");
-      }
       if (!id || !campo || !newDate) {
         console.log(
           "Debe completar todos los campos: campo a editar y nuevo dato."
         );
+        return;
       }
       const index = result.findIndex((product) => product.id === id);
+      if (!result[index]) {
+        return undefined;
+      }
       result[index][campo] = newDate;
       await fs.promises.writeFile(
         this.path,
         JSON.stringify(result, null, "\t")
       );
+      return true;
     }
   };
 
   deleteProduct = async (id) => {
-    const products = await this.getProducts();
     if (fs.existsSync(this.path)) {
       const data = await fs.promises.readFile(this.path, "utf-8");
       const result = JSON.parse(data);
       const event = result.find((product) => product.id === id);
-
-      console.log(event);
-
+      const productIndex = result.findIndex((product) => product.id === id);
       if (event) {
         let newArray = result.filter((product) => product.id !== event.id);
         await fs.promises.writeFile(
           this.path,
           JSON.stringify(newArray, null, "\t")
         );
+        socket.io.emit("product_delete", productIndex);
         return true;
       }
       if (!event) {

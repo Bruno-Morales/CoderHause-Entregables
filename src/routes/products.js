@@ -78,17 +78,22 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   let product = req.params.id;
-  await productManager.updateProduct(
+  let variable = await productManager.updateProduct(
     JSON.parse(product),
     req.body.campo,
     req.body.newDate
   );
-  res.send("Successfull");
+  console.log(variable);
+  if (variable === undefined) {
+    return res.send("Producs not Found");
+  }
+  if (variable === true) {
+    return res.send("Successfull");
+  }
 });
 
 router.delete("/:id", async (req, res) => {
   let product = req.params.id;
-
   let productdelete = await productManager.deleteProduct(JSON.parse(product));
 
   if (productdelete === true) {
