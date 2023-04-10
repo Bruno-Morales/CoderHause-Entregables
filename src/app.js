@@ -5,9 +5,15 @@ var cartsRouter = require("./routes/carts");
 var realtimeproductRouter = require("./routes/realtimeproduct");
 var homeRouter = require("./routes/home");
 var cookieParser = require("cookie-parser");
+require("dotenv").config();
 var path = require("path");
 const { engine } = require("express-handlebars");
 const socket = require("../socket");
+const mongoose = require("mongoose");
+
+mongoose.connect(
+  `mongodb+srv://${process.env.NAME_DB}:${process.env.S3_BUCKET}@coderclouster.9rlxs4i.mongodb.net/?retryWrites=true&w=majority`
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
