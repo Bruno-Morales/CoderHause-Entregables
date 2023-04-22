@@ -1,15 +1,8 @@
 var express = require("express");
 var router = express.Router();
-const multer = require("multer");
-var path = require("path");
-
-const ProductManager = require("../../Product-Managger");
-
-const productManager = new ProductManager();
+const productsModel = require("../../dao/model/products.model.js");
 
 router.post("/", async (req, res) => {
-  const products = await productManager.getProducts();
-
   const product = {
     title: req.body.title,
     description: req.body.description,
@@ -20,87 +13,46 @@ router.post("/", async (req, res) => {
     category: req.body.category,
   };
 
-  let consulta1 = await productManager.addProduct(
-    product.title,
-    product.description,
-    product.price,
-    product.thumbnails,
-    product.code,
-    product.stock,
-    product.category
-  );
+  await productsModel.create(product);
 
-  return res.send(consulta1);
+  return res.send({ status: "Success" });
 });
 
 router.get("/", async (req, res) => {
+  let page = parseInt(req.query.page);
+  //  Agregando en la consulta http://localhost:8080/products/?limit=1  Arroja la cantidad de limites que se busca.
   let limit = req.query.limit;
+  //agregando en la consulta       "http://localhost:8080/products/?sort=1"   <-- en 1 arroja mayor precio.
+  //Agregando en la consulta un -1 "http://localhost:8080/products/?sort=-1"    arroja precios de menor a mayor.
+  let sort = req.query.sort;
 
-  let consulta = await productManager.getProducts();
+  if (!page) page = 1;
 
-  //Para corroborar que no este la lista vacía.
-
-  if (!limit) {
-    if (!consulta) {
-      return res.send("No hay productos para mostrar");
+  let result = await productsModel.paginate(
+    {},
+    {
+      page,
+      limit: limit ?? 10,
+      sort: { price: sort },
+      lean: true,
     }
-    res.send(consulta);
-    return;
-  }
-  let parseado = JSON.parse(limit);
-
-  let numeroreal = consulta[parseado - 1];
-
-  const newconsult = consulta.splice(numeroreal, limit);
-
-  res.send(newconsult);
-});
-
-router.get("/:id", async (req, res) => {
-  let product = req.params.id;
-
-  let segundaConsulta = await productManager.getProducts();
-
-  let primeraConsulta = await productManager.getProductById(
-    JSON.parse(product)
   );
-  //console.log(primeraConsulta);
-  //console.log(primeraConsulta.length);
-  if (!segundaConsulta) {
-    return res.send("No hay productos en el archivo.");
-  }
-  if (!primeraConsulta) {
-    return res.send("No hay productos con ese ID.");
-  }
 
-  res.send(primeraConsulta);
+  result.prevLink = result.hasPrevPage
+    ? `http://localhost:8080/products/?page=${result.prevPage}`
+    : "";
+  result.nextLink = result.hasNextPage
+    ? `http://localhost:8080/products/?page=${result.nextPage}`
+    : "";
+  result.isValid = !(page <= 0 || page > result.totalPages);
+
+  res.render("products", result);
 });
 
-router.put("/:id", async (req, res) => {
-  let product = req.params.id;
-  let variable = await productManager.updateProduct(
-    JSON.parse(product),
-    req.body.campo,
-    req.body.newDate
-  );
-  console.log(variable);
-  if (variable === undefined) {
-    return res.send("Producs not Found");
-  }
-  if (variable === true) {
-    return res.send("Successfull");
-  }
-});
-
-router.delete("/:id", async (req, res) => {
-  let product = req.params.id;
-  let productdelete = await productManager.deleteProduct(JSON.parse(product));
-
-  if (productdelete === true) {
-    res.send("Successfull");
-  } else {
-    res.send("Product Not Found");
-  }
+router.get("/productid/:id", async (req, res) => {
+  let idNew = req.params.id;
+  let result = await productsModel.findOne({ _id: idNew });
+  res.render("productid", result);
 });
 
 module.exports = router;

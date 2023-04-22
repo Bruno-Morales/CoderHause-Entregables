@@ -1,18 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Example App</title>
-</head>
-<body>
-<h1>Hola estoy en el Home - Lista products</h1>
-<br>
-<br>
-    {{#each products}}
+{{!-- 
+<h1>Hola estoy en el Home - Lista Usuarios</h1>
+
+
+{{#if isValid}}
+<div>
+    {{#each docs}}
     <div>
-        <h2>{{this.title}}</h2>
+        <p>Nombre: {{this.first_name}} &nbsp; Apellido: {{this.last_name}}</p>
     </div>
-    <br>
-{{/each}}
-</body>
-</html>
+    <br/>
+    {{/each}}
+</div>
+<br/>
+<div>
+    {{#if hasPrevPage}}
+        <a href={{this.prevLink}}><< Anterior</a>
+    {{/if}}
+    &nbsp;
+    {{this.page}}
+    &nbsp;
+     {{#if hasNextPage}}
+        <a href={{this.nextLink}}>Siguiente >></a>
+    {{/if}} 
+</div>
+{{else}}
+<h1>No hay Usuarios para mostrar</h1>
+{{/if}} --}}

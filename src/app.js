@@ -12,7 +12,7 @@ const socket = require("../socket");
 const mongoose = require("mongoose");
 
 mongoose.connect(
-  `mongodb+srv://${process.env.NAME_DB}:${process.env.S3_BUCKET}@coderclouster.9rlxs4i.mongodb.net/?retryWrites=true&w=majority`
+  `mongodb+srv://${process.env.NAME_DB}:${process.env.S3_BUCKET}@coderclouster.9rlxs4i.mongodb.net/test?retryWrites=true&w=majority`
 );
 
 app.use(express.json());
