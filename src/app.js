@@ -4,6 +4,8 @@ var productsRouter = require("./routes/products");
 var cartsRouter = require("./routes/carts");
 var realtimeproductRouter = require("./routes/realtimeproduct");
 var homeRouter = require("./routes/home");
+var succesfullRouter = require("./routes/succesfull");
+var registerRouter = require("./routes/register");
 var cookieParser = require("cookie-parser");
 require("dotenv").config();
 var path = require("path");
@@ -29,6 +31,8 @@ app.use("/realtimeproducts", realtimeproductRouter);
 
 app.use("/products", productsRouter);
 app.use("/carts", cartsRouter);
+app.use("/register", registerRouter);
+app.use("/succesfull", succesfullRouter);
 
 const httpServer = app.listen(8080, () => {
   console.log("Listening on PORT 8080");

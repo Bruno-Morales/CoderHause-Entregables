@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-var path = require("path");
 const userModel = require("../../dao/model/user.model.js");
 // const ProductManager = require("../../Product-Managger");
 
@@ -37,7 +36,6 @@ router.post("/create", async (req, res) => {
   };
 
   await userModel.create(user);
-
   res.send({ status: "Success" });
   // let products = await productManager.getProducts();
   // //Para corroborar que no este la lista vacía.[0]
@@ -45,9 +43,8 @@ router.post("/create", async (req, res) => {
 });
 
 router.delete("/delete/:id", async (req, res) => {
-  const users = await userModel.find();
-
-  let product = req.params.id;
+  // const users = await userModel.find();
+  // let product = req.params.id;
 });
 
 module.exports = router;
