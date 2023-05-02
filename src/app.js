@@ -5,7 +5,10 @@ var cartsRouter = require("./routes/carts");
 var realtimeproductRouter = require("./routes/realtimeproduct");
 var homeRouter = require("./routes/home");
 var succesfullRouter = require("./routes/succesfull");
+var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
+
+var profileRouter = require("./routes/profile");
 var cookieParser = require("cookie-parser");
 require("dotenv").config();
 var path = require("path");
@@ -13,8 +16,18 @@ const { engine } = require("express-handlebars");
 const socket = require("../socket");
 const mongoose = require("mongoose");
 
+var session = require("express-session");
+
 mongoose.connect(
   `mongodb+srv://${process.env.NAME_DB}:${process.env.S3_BUCKET}@coderclouster.9rlxs4i.mongodb.net/test?retryWrites=true&w=majority`
+);
+
+app.use(
+  session({
+    secret: "This is a secret",
+    resave: true,
+    saveUninitialized: true,
+  })
 );
 
 app.use(express.json());
@@ -26,9 +39,9 @@ app.set("views", path.join(__dirname, "../public/views"));
 app.set("view engine", "handlebars");
 
 app.use("/", homeRouter);
-
+app.use("/login", loginRouter);
 app.use("/realtimeproducts", realtimeproductRouter);
-
+app.use("/profile", profileRouter);
 app.use("/products", productsRouter);
 app.use("/carts", cartsRouter);
 app.use("/register", registerRouter);

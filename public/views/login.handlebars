@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Ingresa</title>
+</head>
+        <form action="./login" method="post" class="form-login">
+            <br>
+            <h1 class="form-titulo"> Inicia Sesion </h1>
+            <div>
+                <ul class="errors" id="errors">
+                </ul>
+            </div>
+            <div class="div-login">  
+                <div class="email">
+                    <i class="fa-solid fa-user icon"></i>
+                    <input type="text" name="email" class="sinborde email" placeholder="Correo Electronico" maxlength="30">
+                    <i class="fa-solid fa-lock icon"></i>
+                    <input type="password" name="password" class="sinborde pass" placeholder="Contraseña" maxlength="30"/>
+                </div>
+            <div>
+                <br>
+                <label><input type="checkbox" class="checkbox" name="recordar"> Recuerdame</label>
+                </br>
+                <br>
+                <div> ¿Olvidaste tu contraseña? <a class="link1" href="/">Recuperala haciendo
+                        click</a></div>
+                <br>
+                <div> ¿No tienes cuenta? <a class="link2" href="register">Registrate</a></div>
+                <br>
+                <div><input type="submit" value="Continuar" class="button"></div>
+            </div>
+        </form>
+        <script src="/js/login.js"></script>
+        
+    
+
+</html>
