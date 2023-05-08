@@ -17,6 +17,8 @@ const socket = require("../socket");
 const mongoose = require("mongoose");
 
 var session = require("express-session");
+const passport = require("passport");
+const initializePassport = require("./auth/passport.js");
 
 mongoose.connect(
   `mongodb+srv://${process.env.NAME_DB}:${process.env.S3_BUCKET}@coderclouster.9rlxs4i.mongodb.net/test?retryWrites=true&w=majority`
@@ -29,6 +31,10 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

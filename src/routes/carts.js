@@ -25,16 +25,18 @@ router.get("/:id", async (req, res) => {
   const cart = await cartsModel
     .findOne({ _id: cartid })
     .populate("products.product");
-  return res.send(cart);
-  // let segundaConsulta = await cartManager.getCarts();
-  // let primeraConsulta = await cartManager.getCartById(JSON.parse(cart));
-  //console.log(primeraConsulta);
-  //console.log(primeraConsulta.length);
+  // console.log(cart.products[0].product.title);
 
-  // if (primeraConsulta === undefined) {
-  //   return res.sendStatus(404, "Cart not Found!");
-  // }
-  // res.send(primeraConsulta);
+  let totales = [];
+
+  for (i = 0; i < cart.products.length; i++) {
+    totales.push(cart.products[i].product.title);
+  }
+  // console.log(totales);
+  // console.log(cart);
+  // console.log("--------------");
+
+  return res.render("carts", { cart: cart.products });
 });
 
 //agregar producto al carrito .
@@ -43,7 +45,7 @@ router.post("/:cid/product/:pid/", async (req, res) => {
   const productId = req.params.pid;
   const quantity = 1;
 
-  const updatedCart = await cartsModel.updateOne(
+  await cartsModel.updateOne(
     { _id: cartId },
     { $push: { products: [{ product: productId, quantity }] } }
   );
@@ -55,6 +57,31 @@ router.post("/:cid/product/:pid/", async (req, res) => {
   // console.log(primeraConsulta);
   // console.log(primeraConsulta.length);
   // res.send("Products add successfull");
+});
+
+router.put("/:cid/product/:pid/", async (req, res) => {
+  const cartId = req.params.cid;
+  const productId = req.params.pid;
+
+  await cartsModel.updateOne(
+    { _id: cartId },
+    { $push: { products: [{ product: productId }] } }
+  );
+
+  return res.redirect("/succesfull");
+});
+
+router.delete("/:cid/product/:pid/", async (req, res) => {
+  const cartId = req.params.cid;
+  const productId = req.params.pid;
+  await cartsModel.deleteOne({ _id: cartId }, { product: productId });
+  return res.send("Product deleted!");
+});
+
+router.delete("/:cid/", async (req, res) => {
+  const cartId = req.params.cid;
+  await cartsModel.deleteMany({ _id: cartId });
+  return res.send("Cart deleted!");
 });
 
 module.exports = router;

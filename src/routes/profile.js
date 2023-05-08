@@ -7,6 +7,7 @@ router.get("/", async (req, res) => {
     return res.redirect("login");
   }
   //para entrar como administrador
+
   return res.render("profile", {
     user: req.session.userLogged,
   });
