@@ -3,9 +3,43 @@ const local = require("passport-local");
 const userModel = require("../../dao/model/user.model.js");
 const bcrypt = require("bcrypt");
 
+const GitHubStrategy = require("passport-github2");
+
 const LocalStrategy = local.Strategy;
 
+const { clientID, clientSecret, callbackUrl } = require("../../config.js");
+
 const initializePassport = () => {
+  passport.use(
+    "github",
+    new GitHubStrategy(
+      {
+        clientID,
+        clientSecret,
+        callbackUrl,
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          let user = await userModel.findOne({ email: profile._json.email });
+          if (!user) {
+            let newUser = {
+              first_name: profile._json.name,
+              last_name: "",
+              email: profile._json.email,
+              password: "",
+            };
+            let result = await userModel.create(newUser);
+            return done(null, result);
+          }
+
+          return done(null, user);
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+
   passport.use(
     "register",
     new LocalStrategy(
@@ -48,9 +82,11 @@ const initializePassport = () => {
         try {
           const user = await userModel.findOne({ email: username });
           if (!user) return done(null, false);
+          const comparePassword = bcrypt.compareSync(password, user.password);
 
-          if (!isValidPassword(user, password)) return done(null, false);
-
+          if (!comparePassword) {
+            return done(null, false);
+          }
           return done(null, user);
         } catch (error) {
           return done(error);

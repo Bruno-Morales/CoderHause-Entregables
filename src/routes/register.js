@@ -7,6 +7,11 @@ var router = express.Router();
 router.get("/", async (req, res) => {
   res.render("register");
 });
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] }),
+  async (req, res) => {}
+);
 
 router.post(
   "/",
