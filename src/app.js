@@ -5,10 +5,8 @@ var cartsRouter = require("./routes/carts");
 var realtimeproductRouter = require("./routes/realtimeproduct");
 var homeRouter = require("./routes/home");
 var succesfullRouter = require("./routes/succesfull");
-var loginRouter = require("./routes/login");
-var registerRouter = require("./routes/register");
+var userRouter = require("./routes/user");
 
-var profileRouter = require("./routes/profile");
 var cookieParser = require("cookie-parser");
 require("dotenv").config();
 var path = require("path");
@@ -45,12 +43,10 @@ app.set("views", path.join(__dirname, "../public/views"));
 app.set("view engine", "handlebars");
 
 app.use("/", homeRouter);
-app.use("/login", loginRouter);
 app.use("/realtimeproducts", realtimeproductRouter);
-app.use("/profile", profileRouter);
+app.use("/user", userRouter);
 app.use("/products", productsRouter);
 app.use("/carts", cartsRouter);
-app.use("/register", registerRouter);
 app.use("/succesfull", succesfullRouter);
 
 const httpServer = app.listen(8080, () => {
