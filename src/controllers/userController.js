@@ -5,16 +5,13 @@ const userController = {
     res.render("register");
   },
   profile: async (req, res) => {
-    if (!req.session.userLogged) {
-      return res.redirect("login");
-    }
     return res.render("profile", {
       user: req.session.userLogged,
     });
   },
   logaut: (req, res) => {
     req.session.destroy(() => {
-      res.redirect("../login");
+      return res.redirect("login");
     });
   },
   login: (req, res) => {
@@ -26,15 +23,14 @@ const userController = {
     });
     let { first_name, last_name, rol } = user;
     req.session.userLogged = user;
-    console.log("hola");
-    return res.render("profile", { user });
+    return res.redirect("profile");
   },
   githubCallback: async (req, res) => {
     let user = await userModel.findOne({
       email: req.body.email,
     });
     req.session.userLogged = user;
-    return res.render("profile");
+    return res.redirect("profile");
   },
 };
 

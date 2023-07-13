@@ -3,7 +3,7 @@ const productsModel = require("../../dao/model/products.model.js");
 const productController = {
   index: async (req, res) => {
     if (!req.session.userLogged) {
-      return res.redirect("login");
+      return res.redirect("user/login");
     }
     //para entrar como administrador
 

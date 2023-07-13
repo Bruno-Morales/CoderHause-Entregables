@@ -6,6 +6,7 @@ var realtimeproductRouter = require("./routes/realtimeproduct");
 var homeRouter = require("./routes/home");
 var succesfullRouter = require("./routes/succesfull");
 var userRouter = require("./routes/user");
+var mockingproductsRouter = require("./routes/mockingproducts");
 
 var cookieParser = require("cookie-parser");
 require("dotenv").config();
@@ -45,6 +46,7 @@ app.set("view engine", "handlebars");
 app.use("/", homeRouter);
 app.use("/realtimeproducts", realtimeproductRouter);
 app.use("/user", userRouter);
+app.use("/mockingproducts", mockingproductsRouter);
 app.use("/products", productsRouter);
 app.use("/carts", cartsRouter);
 app.use("/succesfull", succesfullRouter);
